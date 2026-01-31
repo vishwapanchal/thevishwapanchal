@@ -6,9 +6,10 @@ if [ ! -d "frontend" ]; then
   exit 1
 fi
 
-echo "🚀 Deploying updates to Cloudflare (Project: vishwapanchal)..."
+echo "🚀 Starting PRODUCTION Deployment for 'vishwapanchal'..."
 
-# 1. Build the React Application
+# 1. Build the Project
+# We rebuild to ensure the latest code is what gets uploaded
 echo "🛠️  Building the frontend..."
 cd frontend
 npm run build
@@ -22,10 +23,14 @@ fi
 # Go back to root
 cd ..
 
-# 2. Deploy to Cloudflare Pages
-# This uploads the 'frontend/build' folder to the 'vishwapanchal' project
-echo "☁️  Pushing to Cloudflare..."
+# 2. Deploy to Cloudflare Pages (PRODUCTION)
+# The critical flag here is '--branch main'. 
+# This tells Cloudflare to treat this upload as the production version.
+echo "☁️  Pushing to Cloudflare Production..."
 
-npx wrangler pages deploy frontend/build --project-name vishwapanchal --commit-dirty=true
+npx wrangler pages deploy frontend/build --project-name vishwapanchal --branch main --commit-dirty=true
 
-echo "✅ Deployment complete! Your site updates are live."
+echo "--------------------------------------------------------"
+echo "✅ PRODUCTION DEPLOYMENT COMPLETE"
+echo "🌐 Your live site should now be updated."
+echo "--------------------------------------------------------"
